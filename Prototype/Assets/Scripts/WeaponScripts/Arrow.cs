@@ -4,14 +4,22 @@ using System.Collections;
 
 public class Arrow : BaseWeapon
 {
-    public const float TIME_MOVE_DEFAULT = 1f;
+    //public const float TIME_MOVE_DEFAULT = 1f;
+    public const float VELOCITY_WEAPON = 10f;
 
-    private Vector2 defaultPos;
+    [Header("DOTween")]
+    public Ease ease_type;
+    public AnimationCurve curve;
+
+    private Vector2 dir = Vector2.right;
+
+    private void Update()
+    {
+    }
 
     private void OnEnable()
     {
-        if(defaultPos != Vector2.zero)
-            transform.position = defaultPos;
+        
     }
 
     private void OnDisable()
@@ -25,20 +33,25 @@ public class Arrow : BaseWeapon
         throw new System.NotImplementedException();
     }
 
-    public override void DirectAttack(Vector2 dir)
+    public override void DirectAttack(Vector2 _dir)
     {
-        transform.rotation = Quaternion.FromToRotation(Vector2.right, dir);
+        transform.rotation = Quaternion.FromToRotation(Vector2.right, _dir);
+        dir = _dir;
     }
 
 
-    public override void Move(Vector2 target = new Vector2())
+    public override void Move(Transform target)
     {
-        if (defaultPos == null)
-            defaultPos = transform.position;
-
         //Temp: base move
-        transform.DOMove(target, TIME_MOVE_DEFAULT / speed).
-            OnComplete(() => PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString()));
+        //transform.DOPath(path, TIME_MOVE_DEFAULT / speed, PathType.CubicBezier, PathMode.TopDown2D, 10, Color.blue).SetEase(ease_type).;
+
+        var distance = Vector2.Distance(target.position, transform.position);
+        transform.DOMove(target.position, speed * distance / VELOCITY_WEAPON).SetEase(ease_type).
+            OnComplete(() =>
+            {
+                if(gameObject.activeSelf)
+                    PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString());
+            });
 
         //transform.DOLocalMoveX(transform.position.x + 10, TIME_MOVE_DEFAULT * speed).
         //    OnComplete(() => PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString()));
@@ -50,7 +63,6 @@ public class Arrow : BaseWeapon
         {
             var enemy = other.gameObject.GetComponent<BaseEnemy>();
             enemy.Damaged(damage);
-
 
             PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString());
         }

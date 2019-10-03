@@ -62,15 +62,14 @@ public class PoolManager : Singleton<PoolManager>
         if (!pools.ContainsKey(poolName))
             pools.Add(poolName, new Queue<GameObject>());
 
-        //set parent
-        obj.transform.SetParent(transform);
-        pools[poolName].Enqueue(obj);
-
         if (obj.activeSelf)
         {
             obj.SetActive(false);
         }
-        
+
+        //set parent
+        obj.transform.SetParent(transform);
+        pools[poolName].Enqueue(obj);
     }
 
     private GameObject GetPrefabByName(string name)

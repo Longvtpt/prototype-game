@@ -54,7 +54,7 @@ public class Hero : MonoBehaviour
         if (canAttack && timeCooldownAttack <= 0 && enemy != null)
         {
             //Can use skill?
-            if(mana >= 50)
+            if (mana >= 50)
             {
                 SwitchState(HeroState.AttackSkill);
 
@@ -70,8 +70,8 @@ public class Hero : MonoBehaviour
 
                 //Create Weapon
                 var weapon = InstantiateArrow();
-                weapon.DirectAttack((enemy.transform.position - weaponPos.position));
-                weapon.Move(enemy.position);
+                weapon.DirectAttack((enemy.transform.position - weaponPos.position).normalized);
+                weapon.Move(enemy);
             }
         }
     }
@@ -79,7 +79,6 @@ public class Hero : MonoBehaviour
     private BaseWeapon InstantiateArrow()
     {
         var obj = PoolManager.Instance.PopPool(PoolName.ARROW.ToString(), weaponPos.position, Quaternion.identity) as GameObject;
-
         return obj.GetComponent<BaseWeapon>();
     }
 
@@ -171,7 +170,7 @@ public class Hero : MonoBehaviour
             else
             {
                 float dis = 0;
-                if((dis = Vector2.Distance(transform.position, enemy.position)) < minDistance)
+                if((dis = Vector2.Distance(transform.position, enemies[i].transform.position)) < minDistance)
                 {
                     enemy = enemies[i].transform;
                     minDistance = dis;

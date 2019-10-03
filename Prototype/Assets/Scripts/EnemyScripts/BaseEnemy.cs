@@ -24,6 +24,9 @@ public class BaseEnemy : MonoBehaviour
     public int floorIndex;
     public float enemySpeed;
     public bool isMove;
+    public AnimationCurve curveMove;
+
+    private int healthCurrent;
 
     void Start()
     {
@@ -34,7 +37,7 @@ public class BaseEnemy : MonoBehaviour
 
     private void OnEnable()
     {
-
+        healthCurrent = health;
         EnemyManager.Instance.AddEnemy(this);
 
         StartCoroutine(MoveTo());
@@ -46,11 +49,11 @@ public class BaseEnemy : MonoBehaviour
 
         if (isMove)
         {
-            transform.DOMoveX(EnemyManager.Instance.heroPos[floorIndex].position.x + 1, MOVE_TIMEBASE_TO_HERO * enemySpeed, false);
+            transform.DOMoveX(EnemyManager.Instance.heroPos[floorIndex].position.x + 1, MOVE_TIMEBASE_TO_HERO * enemySpeed, false).SetEase(Ease.Linear);
         }
         else
         {
-            transform.DOMoveX(EnemyManager.Instance.enemyPos[floorIndex].position.x + 1, MOVE_TIMEBASE_TO_POS * enemySpeed);
+            transform.DOMoveX(EnemyManager.Instance.enemyPos[floorIndex].position.x + 1, MOVE_TIMEBASE_TO_POS * enemySpeed).SetEase(Ease.Linear);
         }
     }
 
@@ -94,17 +97,16 @@ public class BaseEnemy : MonoBehaviour
 
     public void Damaged(int damaged)
     {
-        health -= damaged;
+        healthCurrent -= damaged;
 
         CheckDie();
     }
 
     private void CheckDie()
     {
-        if(health <= 0)
+        if(healthCurrent <= 0)
         {
             //Effect die
-
 
             //Take
             PoolManager.Instance.PushPool(gameObject, PoolName.BASE_ENEMY.ToString());
