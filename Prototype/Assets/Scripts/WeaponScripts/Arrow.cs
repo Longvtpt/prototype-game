@@ -17,14 +17,14 @@ public class Arrow : BaseWeapon
     {
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        
+        base.OnEnable();
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        transform.DOKill(true);
+        base.OnDisable();
     }
 
 
@@ -40,24 +40,24 @@ public class Arrow : BaseWeapon
     }
 
 
-    public override void Move(Transform target)
+    public override void Move(Vector2 target)
     {
         //Temp: base move
         //transform.DOPath(path, TIME_MOVE_DEFAULT / speed, PathType.CubicBezier, PathMode.TopDown2D, 10, Color.blue).SetEase(ease_type).;
 
-        var distance = Vector2.Distance(target.position, transform.position);
-        transform.DOMove(target.position, speed * distance / VELOCITY_WEAPON).SetEase(ease_type).
+        var distance = Vector2.Distance(target, transform.position);
+        transform.DOMove(target, speed * distance / VELOCITY_WEAPON).SetEase(ease_type).
             OnComplete(() =>
             {
                 if(gameObject.activeSelf)
-                    PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString());
+                    PoolManager.Instance.PushPool(gameObject, nameWeapon.ToString());
             });
 
         //transform.DOLocalMoveX(transform.position.x + 10, TIME_MOVE_DEFAULT * speed).
         //    OnComplete(() => PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString()));
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag.Equals(TagManager.ENEMY))
         {

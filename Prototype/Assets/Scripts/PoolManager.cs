@@ -6,6 +6,7 @@ public enum PoolName
 {
     BASE_ENEMY,
     ARROW,
+    SPECIAL_ARROW,
     SOUND
 }
 

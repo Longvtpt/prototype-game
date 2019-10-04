@@ -10,7 +10,7 @@ public class HeroManager : MonoBehaviour
     [SerializeField]
     private GameObject[] heroPrefabs;
 
-    private int slotCount;
+    private int slotCount = 1;
 
     private void Update()
     {

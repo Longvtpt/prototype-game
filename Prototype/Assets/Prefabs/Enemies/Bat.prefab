@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc260a888540d0a4f852b6c3a770d57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 65
   floorIndex: 1
   enemySpeed: 2
   isMove: 1
@@ -160,6 +160,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  healthCurrent: 0
 --- !u!50 &7042902654198483269
 Rigidbody2D:
   serializedVersion: 4

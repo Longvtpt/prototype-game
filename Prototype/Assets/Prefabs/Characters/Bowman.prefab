@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 7545974251348901915}
   - component: {fileID: 7545974251348901914}
   - component: {fileID: 542016033}
+  - component: {fileID: 7440486069418853351}
+  - component: {fileID: 5733013456010484170}
   m_Layer: 0
   m_Name: Bowman
   m_TagString: Untagged
@@ -151,3 +153,33 @@ MonoBehaviour:
   timeCooldownSkill: 2.5
   state: 0
   weaponPos: {fileID: 7829502964361056077}
+--- !u!114 &7440486069418853351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545974251348901917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7e9a124c28b3247b499168ed2a910c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeCooldown: 10
+  takeMana: 0
+  canActive: 1
+--- !u!114 &5733013456010484170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545974251348901917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d64d07eb8ea804ebe353fd8502f7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeCooldown: 20
+  takeMana: 0
+  canActive: 1

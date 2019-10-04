@@ -26,6 +26,7 @@ public class BaseEnemy : MonoBehaviour
     public bool isMove;
     public AnimationCurve curveMove;
 
+    [SerializeField]
     private int healthCurrent;
 
     void Start()

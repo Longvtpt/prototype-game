@@ -28,10 +28,10 @@ public class Spawn : MonoBehaviour
         yield return null;
         while (counter++ < enemyNumber)
         {
+            yield return new WaitForSeconds(timeCooldown);
+
             if (isSpawn)
             {
-                yield return new WaitForSeconds(timeCooldown);
-
                 var enemyPos = Random.insideUnitCircle / 3.5f + new Vector2(transform.position.x, transform.position.y) + Vector2.right;
                 var enemy = PoolManager.Instance.PopPool(PoolName.BASE_ENEMY.ToString(), enemyPos, Quaternion.identity);
                 counter++;

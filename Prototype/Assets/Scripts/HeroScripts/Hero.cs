@@ -11,6 +11,7 @@ public enum HeroState
     AttackSkill
 }
 
+[RequireComponent(typeof(ASkill))]
 public class Hero : MonoBehaviour
 {
     //Temp
@@ -32,9 +33,13 @@ public class Hero : MonoBehaviour
     [SerializeField]
     private Transform weaponPos;
 
+    private ASkill[] skills; 
+
     private void Start()
     {
         anim = GetComponent<Animator>();
+
+        skills = GetComponents<ASkill>();
     }
 
     private void Update()
@@ -49,17 +54,21 @@ public class Hero : MonoBehaviour
             SetAnimation(HeroState.AttackSkill);
         }
 
-        var enemy = GetEnemyNear();
+        var enemy = EnemyManager.Instance.GetEnemyNear(transform);
         //Temp: Set state by enemy
         if (canAttack && timeCooldownAttack <= 0 && enemy != null)
         {
             //Can use skill?
-            if (mana >= 50)
+            if (mana >= 30)
             {
                 SwitchState(HeroState.AttackSkill);
 
-                mana -= 50;
+                mana -= 30;
                 timeCooldownAttack = timeCooldownSkill;
+
+                //Active skill
+                //Temp: Set skill index by level
+                skills[0].ActiveSkill(transform.position, enemy.position);
             }
             else
             {
@@ -71,7 +80,7 @@ public class Hero : MonoBehaviour
                 //Create Weapon
                 var weapon = InstantiateArrow();
                 weapon.DirectAttack((enemy.transform.position - weaponPos.position).normalized);
-                weapon.Move(enemy);
+                weapon.Move(enemy.position);
             }
         }
     }
@@ -89,7 +98,7 @@ public class Hero : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Time.frameCount % 10 == 0)
+        if(Time.frameCount % 5 == 0)
         {
             RecruitManaTick();
         }
@@ -154,35 +163,6 @@ public class Hero : MonoBehaviour
         anim.SetTrigger(animation);
     }
 
-    private Transform GetEnemyNear()
-    {
-        Transform enemy = null;
 
-        float minDistance = -1;
-        var enemies = EnemyManager.Instance.enemies;
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            if (enemy == null)
-            {
-                enemy = enemies[i].transform;
-                minDistance = Vector2.Distance(enemy.position, transform.position);
-            }
-            else
-            {
-                float dis = 0;
-                if((dis = Vector2.Distance(transform.position, enemies[i].transform.position)) < minDistance)
-                {
-                    enemy = enemies[i].transform;
-                    minDistance = dis;
-                }
-            }
-        }
-        return enemy;
-    }
-}
-
-public interface Skill
-{
-    void Active();
 }
 
