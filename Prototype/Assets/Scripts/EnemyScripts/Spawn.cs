@@ -6,11 +6,10 @@ public class Spawn : MonoBehaviour
 {
     public int enemyNumber;
     [SerializeField]
-    private GameObject[] enemyPrefabs;
+    private EnemyWave[] enemies;
     [SerializeField]
     private float timeCooldown;
 
-    private WaitForSeconds timeCoolDownSpawn;
     [SerializeField]
     private bool isSpawn;
 
@@ -18,8 +17,6 @@ public class Spawn : MonoBehaviour
 
     private void Start()
     {
-        timeCoolDownSpawn = new WaitForSeconds(timeCooldown);
-
         StartCoroutine(SpawnEnemy());
     }
 
@@ -32,10 +29,40 @@ public class Spawn : MonoBehaviour
 
             if (isSpawn)
             {
-                var enemyPos = Random.insideUnitCircle / 3.5f + new Vector2(transform.position.x, transform.position.y) + Vector2.right;
-                var enemy = PoolManager.Instance.PopPool(PoolName.BASE_ENEMY.ToString(), enemyPos, Quaternion.identity);
+                var rand = Random.Range(0, 100);
+                int randIndex = 0;
+
+                int totalRatio = 0;
+                for (int i = 0; i < enemies.Length; i++)
+                {
+                    if (enemies.Length == 1)
+                    {
+                        randIndex = 0;
+                        break;
+                    }
+
+                    if (rand < enemies[i].ratio + totalRatio && rand >= totalRatio)
+                    {
+                        randIndex = i;
+                        break;
+                    }
+                    else
+                    {
+                        totalRatio += enemies[i].ratio;
+                    }
+                }
+
+                var enemyPos = Random.insideUnitCircle / 3f + new Vector2(transform.position.x, transform.position.y) + Vector2.right;
+                var enemy = PoolManager.Instance.PopPool(enemies[randIndex].enemy.ToString(), enemyPos, Quaternion.identity);
                 counter++;
             }
         }
     }
+}
+
+[System.Serializable]
+public struct EnemyWave
+{
+    public PoolName enemy;
+    public int ratio;
 }

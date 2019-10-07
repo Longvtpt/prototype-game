@@ -56,7 +56,7 @@ public class Bullet : BaseWeapon
         
     }
 
-    public override void Move(Vector2 target)
+    public override void Move(Vector3 target)
     {
         throw new System.NotImplementedException();
     }

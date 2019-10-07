@@ -4,9 +4,17 @@ using UnityEngine;
 
 public enum PoolName
 {
-    BASE_ENEMY,
+    //Enemy type
+    BAT_ENEMY,
+    DRAGON_ENEMY,
+
+    //Weapon base
     ARROW,
+
+    //Weapon skill
     SPECIAL_ARROW,
+
+    //Sound
     SOUND
 }
 

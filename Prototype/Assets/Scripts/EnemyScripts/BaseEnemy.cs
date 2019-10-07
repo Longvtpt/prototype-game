@@ -13,6 +13,7 @@ public enum EnemyState
 [RequireComponent(typeof(Animator))]
 public class BaseEnemy : MonoBehaviour
 {
+    public PoolName enemyType;
     public const float MOVE_TIMEBASE_TO_HERO = 5f;
     public const float MOVE_TIMEBASE_TO_POS = 1f;
 
@@ -26,22 +27,55 @@ public class BaseEnemy : MonoBehaviour
     public bool isMove;
     public AnimationCurve curveMove;
 
+    public float timeCooldownAttack = 1f;
+    private float timeCooldown;
+    private bool canAttack;
+
+#if UNITY_EDITOR
+    [Header("Debug")]
     [SerializeField]
+    private float attackRange = 1f;
+#endif
+
+
+    //[SerializeField]
     private int healthCurrent;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-
         SwitchState(EnemyState.Move);
     }
 
     private void OnEnable()
     {
+        timeCooldown = 0;
         healthCurrent = health;
         EnemyManager.Instance.AddEnemy(this);
 
-        StartCoroutine(MoveTo());
+        if(anim != null)
+            SwitchState(EnemyState.Move);
+    }
+
+    private void Update()
+    {
+        if (canAttack && timeCooldown <= 0)
+            SwitchState(EnemyState.Attack);
+    }
+
+    private void FixedUpdate()
+    {
+#if UNITY_EDITOR
+        ShowAttackRange();
+#endif
+
+        TickTimeAttack();
+    }
+
+    private void TickTimeAttack()
+    {
+        if (timeCooldown > 0)
+            timeCooldown -= Time.deltaTime;
     }
 
     private IEnumerator MoveTo()
@@ -54,7 +88,12 @@ public class BaseEnemy : MonoBehaviour
         }
         else
         {
-            transform.DOMoveX(EnemyManager.Instance.enemyPos[floorIndex].position.x + 1, MOVE_TIMEBASE_TO_POS * enemySpeed).SetEase(Ease.Linear);
+            var time = MOVE_TIMEBASE_TO_POS * enemySpeed;
+            transform.DOMoveX(EnemyManager.Instance.enemyPos[floorIndex].position.x, MOVE_TIMEBASE_TO_POS * enemySpeed).SetEase(Ease.Linear);
+            yield return new WaitForSeconds(time);
+
+            //Change enemy state
+            canAttack = true;
         }
     }
 
@@ -69,8 +108,19 @@ public class BaseEnemy : MonoBehaviour
     private void SwitchState(EnemyState _state)
     {
         state = _state;
-
         SetAnimation(_state);
+
+        if (_state == EnemyState.Move)
+        {
+            canAttack = false;
+            StartCoroutine(MoveTo());
+        }
+
+        if (_state == EnemyState.Attack)
+        {
+            canAttack = true;
+            Attack();
+        }
     }
 
     private void SetAnimation(EnemyState _state)
@@ -110,7 +160,19 @@ public class BaseEnemy : MonoBehaviour
             //Effect die
 
             //Take
-            PoolManager.Instance.PushPool(gameObject, PoolName.BASE_ENEMY.ToString());
+            PoolManager.Instance.PushPool(gameObject, enemyType.ToString());
         }
+    }
+
+    public void ShowAttackRange()
+    {
+        Debug.DrawRay(transform.position, Vector3.left * attackRange, Color.red, Time.fixedDeltaTime);
+    }
+
+    public virtual void Attack()
+    {
+        timeCooldown = timeCooldownAttack;
+        //attack action
+
     }
 }

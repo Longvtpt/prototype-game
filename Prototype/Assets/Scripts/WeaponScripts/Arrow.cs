@@ -13,6 +13,11 @@ public class Arrow : BaseWeapon
 
     private Vector2 dir = Vector2.right;
 
+    private void Start()
+    {
+        nameWeapon = PoolName.ARROW;
+    }
+
     private void Update()
     {
     }
@@ -40,13 +45,14 @@ public class Arrow : BaseWeapon
     }
 
 
-    public override void Move(Vector2 target)
+    public override void Move(Vector3 target)
     {
         //Temp: base move
         //transform.DOPath(path, TIME_MOVE_DEFAULT / speed, PathType.CubicBezier, PathMode.TopDown2D, 10, Color.blue).SetEase(ease_type).;
 
         var distance = Vector2.Distance(target, transform.position);
-        transform.DOMove(target, speed * distance / VELOCITY_WEAPON).SetEase(ease_type).
+        var dir = (target - transform.position).normalized;
+        transform.DOMove(target + dir * 5, speed * distance / VELOCITY_WEAPON).SetEase(ease_type).
             OnComplete(() =>
             {
                 if(gameObject.activeSelf)

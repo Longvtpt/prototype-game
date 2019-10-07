@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public abstract class BaseWeapon : MonoBehaviour
 {
-    public PoolName nameWeapon;
+    protected PoolName nameWeapon;
     public int damage;
     public float speed;
 
@@ -17,7 +17,7 @@ public abstract class BaseWeapon : MonoBehaviour
 
     public abstract void ChangeSpecial();
 
-    public abstract void Move(Vector2 target);
+    public abstract void Move(Vector3 target);
 
     protected virtual void OnEnable()
     {
