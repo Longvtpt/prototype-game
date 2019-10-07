@@ -1880,6 +1880,25 @@ MonoBehaviour:
         ratio: 50
       - enemy: 1
         ratio: 50
+  - waves:
+    - enemyNumber: 5
+      enemies:
+      - enemy: 0
+        ratio: 60
+      - enemy: 1
+        ratio: 40
+    - enemyNumber: 10
+      enemies:
+      - enemy: 0
+        ratio: 50
+      - enemy: 1
+        ratio: 50
+    - enemyNumber: 10
+      enemies:
+      - enemy: 0
+        ratio: 50
+      - enemy: 1
+        ratio: 50
   enemySpawnPos:
   - {fileID: 1716107824}
   - {fileID: 236885868}

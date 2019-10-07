@@ -9,15 +9,18 @@ public class LevelManager : Singleton<LevelManager>
     public Transform[] enemySpawnPos;
 
     public float timeNextTo;
+    public WaitForSeconds timeNext;
 
     [HideInInspector]
     public bool isNextLevel;
 
     private int levelCurrent = -1;
+    private float timeCanNextLevelDefault = 3f;
 
     private void Start()
     {
         isNextLevel = true;
+        timeNext = new WaitForSeconds(timeNextTo);
     }
 
     private void LateUpdate()
@@ -26,18 +29,35 @@ public class LevelManager : Singleton<LevelManager>
         {
             isNextLevel = false;
             levelCurrent++;
-            LogSystem.LogWarning("Level: " + levelCurrent);
+
+            if(levelCurrent < levels.Length)
+                LogSystem.LogWarning("Level: " + levelCurrent);
+            else
+            {
+                LogSystem.LogByColor("Game Done!!!!!!", "grey");
+                return;
+            }
 
             StartCoroutine(levels[levelCurrent].PlayLevel());
             StartCoroutine(levels[levelCurrent].SpawnFunc());
         }
 
-        if(!isNextLevel && EnemyManager.Instance.enemies.Count == 0)
+        if(!isNextLevel && EnemyManager.Instance.enemies.Count == 0 && timeCanNextLevelDefault <= 0)
         {
             isNextLevel = true;
+            timeCanNextLevelDefault = 3f;
         }
+
+        TickTimeCanNextLevel();
+    }
+
+    private void TickTimeCanNextLevel()
+    {
+        if (timeCanNextLevelDefault > 0)
+            timeCanNextLevelDefault -= Time.deltaTime;
     }
 }
+
 
 [System.Serializable]
 public class Level
@@ -57,7 +77,12 @@ public class Level
         {
             LogSystem.LogSuccess("Wave: " + i);
             SpawnFunc = waves[i].ReturnFunc();
-            yield return new WaitForSeconds(LevelManager.Instance.timeNextTo);
+
+            while (!IsNextWave(waves[i]))
+            {
+                yield return LevelManager.Instance.timeNext;
+
+            }
         }
 
         //LevelManager.Instance.isNextLevel = true;
@@ -67,6 +92,11 @@ public class Level
     public bool NextLevel()
     {
         return isNextLevel;
+    }
+
+    public bool IsNextWave(Wave wave)
+    {
+        return wave.WaveDone();
     }
 }
 
@@ -120,7 +150,12 @@ public class Wave
             enemy.transform.position = (Random.insideUnitCircle / 3f) + new Vector2(floorPos.x + 1, floorPos.y);
 
             counter++;
-            yield return new WaitForSeconds(LevelManager.Instance.timeNextTo);
+            yield return LevelManager.Instance.timeNext;
         }
+    }
+
+    public bool WaveDone()
+    {
+        return counter >= enemyNumber;
     }
 }
