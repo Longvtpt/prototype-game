@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class ASkill : MonoBehaviour
 {
     public float timeCooldown;
-    public int takeMana;
+    public float timeActionAnim;
     public bool canActive = true;
 
     private void Start()

@@ -10,7 +10,7 @@ public class FireSkill : ASkill
     public override void ActiveSkill(Vector2 from, Vector2 to)
     {
         //Instantiate a fire arrow
-        LogSystem.LogSuccess("Fire skill actived!");
+        //LogSystem.LogSuccess("Fire skill actived!");
 
         var obj = PoolManager.Instance.PopPool(PoolName.SPECIAL_ARROW.ToString(), from) as GameObject;
         var baseWeapon = obj.GetComponent<BaseWeapon>();

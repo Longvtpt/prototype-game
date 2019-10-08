@@ -13,7 +13,7 @@ public class SpecialArrow : Arrow
     {
         if (other.gameObject.tag.Equals(TagManager.ENEMY))
         {
-            LogSystem.LogSuccess("Damage skill --- " + damage);
+            //LogSystem.LogSuccess("Damage skill --- " + damage);
             var enemy = other.gameObject.GetComponent<BaseEnemy>();
             enemy.Damaged(damage);
 

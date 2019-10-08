@@ -19,8 +19,14 @@ public abstract class BaseWeapon : MonoBehaviour
 
     public abstract void Move(Vector3 target);
 
+    //Coll
+    [SerializeField]
+    private int counterColl = 1;
+    protected int counterCollCurrent;
+
     protected virtual void OnEnable()
     {
+        counterCollCurrent = counterColl;
         timeLifeCurrent = timeLife;
     }
 

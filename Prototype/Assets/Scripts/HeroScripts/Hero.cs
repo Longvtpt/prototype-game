@@ -17,34 +17,40 @@ public class Hero : MonoBehaviour
     //Temp
     public int level;
     public int damage;
-    public int mana = 100;
+    public Sprite skillUISprite;
 
     [HideInInspector]
     public bool canAttack;
     public float timeCooldownBase;
-    public float timeCooldownSkill;
 
     public HeroState state;
 
     private int slotIndex;
     private Animator anim;
     private float timeCooldownAttack;
+    private float timeCooldownSkill;
+
+    public float TimeSkill;
 
     [SerializeField]
     private Transform weaponPos;
 
-    private ASkill[] skills; 
+    private ASkill[] skills;
+
+    private Transform enemyTarget;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
 
         skills = GetComponents<ASkill>();
+
+        TimeSkill = skills[0].timeCooldown;
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             SetAnimation(HeroState.AttackBase);
         }
@@ -54,34 +60,41 @@ public class Hero : MonoBehaviour
             SetAnimation(HeroState.AttackSkill);
         }
 
-        var enemy = EnemyManager.Instance.GetEnemyNear(transform);
+        enemyTarget = EnemyManager.Instance.GetEnemyNear(transform);
         //Temp: Set state by enemy
-        if (canAttack && timeCooldownAttack <= 0 && enemy != null)
+        if (canAttack && timeCooldownAttack <= 0 && enemyTarget != null)
         {
-            //Can use skill?
-            if (mana >= 30)
-            {
-                SwitchState(HeroState.AttackSkill);
 
-                mana -= 30;
-                timeCooldownAttack = timeCooldownSkill;
+            //Base attack
+            SwitchState(HeroState.AttackBase);
 
-                //Active skill
-                //Temp: Set skill index by level
-                skills[0].ActiveSkill(transform.position, enemy.position);
-            }
-            else
-            {
-                //Base attack
-                SwitchState(HeroState.AttackBase);
+            timeCooldownAttack = timeCooldownBase;
 
-                timeCooldownAttack = timeCooldownBase;
+            //Create Weapon
+            var weapon = InstantiateArrow();
+            weapon.DirectAttack((enemyTarget.transform.position - weaponPos.position).normalized);
+            weapon.Move(enemyTarget.position);
 
-                //Create Weapon
-                var weapon = InstantiateArrow();
-                weapon.DirectAttack((enemy.transform.position - weaponPos.position).normalized);
-                weapon.Move(enemy.position);
-            }
+        }
+    }
+
+    public void UsingSkillActive()
+    {
+        
+        SwitchState(HeroState.AttackSkill);
+
+        timeCooldownSkill = skills[0].timeCooldown;
+        timeCooldownAttack = skills[0].timeActionAnim;
+
+        //Active skill
+        //Temp: Set skill index by level
+        if (enemyTarget == null)
+        {
+            skills[0].ActiveSkill(transform.position, transform.position + Vector3.right * 10);
+        }
+        else
+        {
+            skills[0].ActiveSkill(transform.position, enemyTarget.position);
         }
     }
 
@@ -96,22 +109,13 @@ public class Hero : MonoBehaviour
         TimeCooldownTick();
     }
 
-    private void FixedUpdate()
-    {
-        if(Time.frameCount % 5 == 0)
-        {
-            RecruitManaTick();
-        }
-    }
-
     private void TimeCooldownTick()
     {
-        timeCooldownAttack -= Time.deltaTime;
-    }
+        if (timeCooldownAttack > 0)
+            timeCooldownAttack -= Time.deltaTime;
 
-    private void RecruitManaTick()
-    {
-        mana += 1;
+        if (timeCooldownSkill > 0)
+            timeCooldownSkill -= Time.deltaTime;
     }
 
     public void SwitchState(HeroState _state)
@@ -162,7 +166,5 @@ public class Hero : MonoBehaviour
     {
         anim.SetTrigger(animation);
     }
-
-
 }
 

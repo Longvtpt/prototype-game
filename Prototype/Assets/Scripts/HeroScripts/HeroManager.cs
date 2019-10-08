@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class HeroManager : MonoBehaviour
 {
+    public SkillUIManager skillUIManager;
+
     [SerializeField]
     private Transform[] slots;
 
     [SerializeField]
     private GameObject[] heroPrefabs;
 
-    private int slotCount = 1;
+    private int slotCount = 0;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && slotCount < 5)
         {
-            AddHero(slotCount, 0);
+            if(slotCount % 2 == 0)
+                AddHero(slotCount, 0);
+            else
+                AddHero(slotCount, 1);
             slotCount++;
-        }    
+
+        }
     }
 
     public void AddHero(int slotIndex, int heroIndex)
@@ -29,5 +35,8 @@ public class HeroManager : MonoBehaviour
 
         hero.transform.position = slots[slotIndex].transform.position - Vector3.right * 2;
         heroScript.MoveToPosAttack(slots[slotIndex].transform.position);
+
+        //Unlock UI skill
+        skillUIManager.AddSkill(slotIndex, heroScript.skillUISprite, heroScript);
     }
 }

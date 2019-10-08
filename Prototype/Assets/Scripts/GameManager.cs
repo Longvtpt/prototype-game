@@ -9,6 +9,8 @@ public class GameManager : Singleton<GameManager>
 
     public AState currentState;
 
+    public bool move_AVersion;
+
     public void SwitchState(AState _state)
     {
 

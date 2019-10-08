@@ -13,6 +13,7 @@ public class Arrow : BaseWeapon
 
     private Vector2 dir = Vector2.right;
 
+
     private void Start()
     {
         nameWeapon = PoolName.ARROW;
@@ -65,7 +66,7 @@ public class Arrow : BaseWeapon
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag.Equals(TagManager.ENEMY))
+        if (counterCollCurrent-- > 0 && other.gameObject.tag.Equals(TagManager.ENEMY))
         {
             var enemy = other.gameObject.GetComponent<BaseEnemy>();
             enemy.Damaged(damage);

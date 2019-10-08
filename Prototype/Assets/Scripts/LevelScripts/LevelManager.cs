@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
+    public TopUIControl topUI;
+
     [SerializeField] private Level[] levels;
 
     public Transform[] enemySpawnPos;
 
     public float timeNextTo;
-    public WaitForSeconds timeNext;
 
     [HideInInspector]
     public bool isNextLevel;
 
-    private int levelCurrent = -1;
-    private float timeCanNextLevelDefault = 3f;
+    public int levelCurrent = 0;
+    private float timeCanNextLevelDefault = 1f;
 
     private void Start()
     {
         isNextLevel = true;
-        timeNext = new WaitForSeconds(timeNextTo);
     }
 
     private void LateUpdate()
@@ -28,25 +28,23 @@ public class LevelManager : Singleton<LevelManager>
         if (isNextLevel)
         {
             isNextLevel = false;
+            timeCanNextLevelDefault = 3f;
             levelCurrent++;
 
-            if(levelCurrent < levels.Length)
-                LogSystem.LogWarning("Level: " + levelCurrent);
-            else
+            if(levelCurrent >= levels.Length)
             {
                 LogSystem.LogByColor("Game Done!!!!!!", "grey");
                 return;
             }
 
             StartCoroutine(levels[levelCurrent].PlayLevel());
-            StartCoroutine(levels[levelCurrent].SpawnFunc());
         }
 
-        if(!isNextLevel && EnemyManager.Instance.enemies.Count == 0 && timeCanNextLevelDefault <= 0)
-        {
-            isNextLevel = true;
-            timeCanNextLevelDefault = 3f;
-        }
+        //if(!isNextLevel && EnemyManager.Instance.enemies.Count == 0 && timeCanNextLevelDefault <= 0)
+        //{
+        //    isNextLevel = true;
+        //    timeCanNextLevelDefault = 3f;
+        //}
 
         TickTimeCanNextLevel();
     }
@@ -62,36 +60,30 @@ public class LevelManager : Singleton<LevelManager>
 [System.Serializable]
 public class Level
 {
-    public SpawnIE SpawnFunc;
     //Default 10 waves
     [SerializeField] private Wave[] waves;
-    private bool isNextLevel;
 
     public IEnumerator PlayLevel()
     {
-        //Change UI
 
+        //UI
+        LevelManager.Instance.topUI.SetupWaveAndLevel(LevelManager.Instance.levelCurrent, waves.Length);
+
+        yield return WaitForSecondCache.WAIT_TIME_ONE;
 
         //active
         for (int i = 0; i < waves.Length; i++)
         {
-            LogSystem.LogSuccess("Wave: " + i);
-            SpawnFunc = waves[i].ReturnFunc();
+            CoroutineHandler.StartStaticCoroutine(waves[i].SpawnEnemy(i));
 
+            //All enemy is died
             while (!IsNextWave(waves[i]))
             {
-                yield return LevelManager.Instance.timeNext;
-
+                yield return WaitForSecondCache.WAIT_TIME_ONE;
             }
         }
 
-        //LevelManager.Instance.isNextLevel = true;
-        isNextLevel = true;
-    }
-
-    public bool NextLevel()
-    {
-        return isNextLevel;
+        LevelManager.Instance.isNextLevel = true;
     }
 
     public bool IsNextWave(Wave wave)
@@ -100,25 +92,24 @@ public class Level
     }
 }
 
-public delegate IEnumerator SpawnIE();
 
 [System.Serializable]
 public class Wave
 {
+    [Range(1, 5)]
     [SerializeField] private int enemyNumber;
     //[SerializeField] private float timeCooldownSpawn;
     [SerializeField] private EnemyWave[] enemies;
 
     private int counter;
 
-    public SpawnIE ReturnFunc()
-    {
-        return SpawnEnemy;
-    }
-
-    public IEnumerator SpawnEnemy()
+    public IEnumerator SpawnEnemy(int waveIndex)
     {
         yield return null;
+
+        //UI
+        LevelManager.Instance.topUI.ResetWaveUI(waveIndex);
+
         while (counter++ < enemyNumber)
         {
             var rand = Random.Range(0, 100);
@@ -147,15 +138,22 @@ public class Wave
             var enemy = PoolManager.Instance.PopPool(enemies[randIndex].enemy.ToString());
             var enemyBase = enemy.GetComponent<BaseEnemy>();
             var floorPos = LevelManager.Instance.enemySpawnPos[enemyBase.floorIndex].position;
-            enemy.transform.position = (Random.insideUnitCircle / 3f) + new Vector2(floorPos.x + 1, floorPos.y);
+            enemy.transform.position = (Random.insideUnitCircle / 2f) + new Vector2(floorPos.x + 1.5f, floorPos.y);
 
-            counter++;
-            yield return LevelManager.Instance.timeNext;
+            //Debug.Log(counter);
+
+            if (GameManager.Instance.move_AVersion)
+                yield return WaitForSecondCache.WAIT_TIME_TWO;
+            else
+                yield return WaitForSecondCache.WAIT_TIME_MIN;
+
+            ////UI
+            //LevelManager.Instance.topUI.AddHealth(enemyBase.health);
         }
     }
 
     public bool WaveDone()
     {
-        return counter >= enemyNumber;
+        return counter >= enemyNumber && EnemyManager.Instance.enemies.Count == 0;
     }
 }

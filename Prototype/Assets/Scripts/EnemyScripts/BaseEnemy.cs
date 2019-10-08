@@ -55,6 +55,9 @@ public class BaseEnemy : MonoBehaviour
 
         if(anim != null)
             SwitchState(EnemyState.Move);
+
+        //UI
+        LevelManager.Instance.topUI.AddHealth(health);
     }
 
     private void Update()
@@ -82,17 +85,35 @@ public class BaseEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        if (isMove)
+
+        if (GameManager.Instance.move_AVersion)
         {
-            transform.DOMoveX(EnemyManager.Instance.heroPos[floorIndex].position.x + 1, MOVE_TIMEBASE_TO_HERO * enemySpeed, false).SetEase(Ease.Linear);
+            if (isMove)
+            {
+                transform.DOMoveX(EnemyManager.Instance.heroPos[floorIndex].position.x + 1, MOVE_TIMEBASE_TO_HERO * enemySpeed, false).SetEase(Ease.Linear);
+            }
+            else
+            {
+                var time = MOVE_TIMEBASE_TO_POS * enemySpeed;
+                transform.DOMoveX(EnemyManager.Instance.enemyPos[floorIndex].position.x, MOVE_TIMEBASE_TO_POS * enemySpeed).SetEase(Ease.Linear);
+                yield return new WaitForSeconds(time);
+
+                //Change enemy state
+                canAttack = true;
+            }
         }
         else
         {
-            var time = MOVE_TIMEBASE_TO_POS * enemySpeed;
-            transform.DOMoveX(EnemyManager.Instance.enemyPos[floorIndex].position.x, MOVE_TIMEBASE_TO_POS * enemySpeed).SetEase(Ease.Linear);
-            yield return new WaitForSeconds(time);
+            transform.DOMoveX(transform.position.x - 1.5f, 0.5f).SetEase(Ease.InOutQuart);
+            yield return WaitForSecondCache.WAIT_TIME_HAFT;
 
-            //Change enemy state
+            if (isMove)
+            {
+                var timeMove = MOVE_TIMEBASE_TO_HERO * enemySpeed;
+                transform.DOMoveX(EnemyManager.Instance.heroPos[floorIndex].position.x + 1, timeMove, false).SetEase(Ease.Linear);
+                yield return new WaitForSeconds(timeMove);
+            }
+
             canAttack = true;
         }
     }
@@ -149,6 +170,9 @@ public class BaseEnemy : MonoBehaviour
     public void Damaged(int damaged)
     {
         healthCurrent -= damaged;
+
+        //UI
+        LevelManager.Instance.topUI.InteractWithSlider(damaged);
 
         CheckDie();
     }
