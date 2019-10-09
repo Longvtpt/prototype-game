@@ -11,6 +11,8 @@ public class GameManager : Singleton<GameManager>
 
     public bool move_AVersion;
 
+    public Camera cam;
+
     public void SwitchState(AState _state)
     {
 

@@ -3,16 +3,14 @@ using System.Collections.Generic;
 
 public enum GameEvent
 {
-    //Character
-    MOVE_CHARACTER,
-    ATTACK_CHARACTER,
+    //Hero
 
     //Enemy
     DIE_ENEMY,
 
-    //Turn base
-    ROUND_DONE,
-    LEVEL_COMPLETE
+    //Items
+    PICK_COIN
+    //Skills
 }
 
 public class EventManager

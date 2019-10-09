@@ -22,6 +22,7 @@ public class BaseEnemy : MonoBehaviour
     private EnemyState state;
 
     public int health;
+    public int coinHolding = 1;
     public int floorIndex;
     public float enemySpeed;
     public bool isMove;
@@ -181,6 +182,14 @@ public class BaseEnemy : MonoBehaviour
     {
         if(healthCurrent <= 0)
         {
+            //Instantiate coin
+            for (int i = 0; i < coinHolding; i++)
+            {
+                var coinObj = PoolManager.Instance.PopPool(PoolName.COIN.ToString()) as GameObject;
+                var pos = Random.insideUnitCircle / 2 + Vector2.down / 4 + new Vector2(transform.position.x, transform.position.y);
+                coinObj.transform.position = pos;
+            }
+
             //Effect die
 
             //Take

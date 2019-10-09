@@ -5,11 +5,11 @@ using System.Collections;
 public class Arrow : BaseWeapon
 {
     //public const float TIME_MOVE_DEFAULT = 1f;
+    public PoolName WeaponName = PoolName.ARROW;
     public const float VELOCITY_WEAPON = 10f;
 
     [Header("DOTween")]
     public Ease ease_type;
-    public AnimationCurve curve;
 
     private Vector2 dir = Vector2.right;
 
@@ -71,7 +71,7 @@ public class Arrow : BaseWeapon
             var enemy = other.gameObject.GetComponent<BaseEnemy>();
             enemy.Damaged(damage);
 
-            PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString());
+            PoolManager.Instance.PushPool(gameObject, WeaponName.ToString());
         }
     }
 }

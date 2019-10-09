@@ -5,20 +5,30 @@ using DG.Tweening;
 
 public class TopUIControl : MonoBehaviour
 {
+    [Header("Wave UI")]
     [SerializeField] private Slider sliderHealth;
     [SerializeField] private Transform waveContainer;
     [SerializeField] private GameObject waveUIPrefab;
-    [SerializeField] private TextMeshProUGUI fromLevel;
-    [SerializeField] private TextMeshProUGUI toLevel;
-
     [SerializeField] private Color activeWaveColor;
     [SerializeField] private Color unactiveWaveColor;
 
+    [Header("Level UI")]
+    [SerializeField] private TextMeshProUGUI fromLevel;
+    [SerializeField] private TextMeshProUGUI toLevel;
+
+    [Header("Coin UI")]
+    [SerializeField] private RectTransform coinImg;
+    [SerializeField] private TextMeshProUGUI textCoin;
+
     private int healthTotal;
+
 
     private void Start()
     {
         sliderHealth.value = 0;
+        Coin.coinUIPos = coinImg.position;
+
+        EventManager.AddListener(GameEvent.PICK_COIN, UpdateCoininfo);
     }
 
     public void ResetWaveUI(int waveIndex)
@@ -93,5 +103,12 @@ public class TopUIControl : MonoBehaviour
     {
         float ratio = damaged / (float)healthTotal;
         return ratio;
+    }
+
+
+    //Items
+    private void UpdateCoininfo()
+    {
+        textCoin.text = CoinSystem.Instance.GetCoinInfo().ToString();
     }
 }

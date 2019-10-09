@@ -18,6 +18,7 @@ public class Hero : MonoBehaviour
     public int level;
     public int damage;
     public Sprite skillUISprite;
+    public PoolName baseAttackItem = PoolName.ARROW;
 
     [HideInInspector]
     public bool canAttack;
@@ -100,7 +101,7 @@ public class Hero : MonoBehaviour
 
     private BaseWeapon InstantiateArrow()
     {
-        var obj = PoolManager.Instance.PopPool(PoolName.ARROW.ToString(), weaponPos.position, Quaternion.identity) as GameObject;
+        var obj = PoolManager.Instance.PopPool(baseAttackItem.ToString(), weaponPos.position, Quaternion.identity) as GameObject;
         return obj.GetComponent<BaseWeapon>();
     }
 

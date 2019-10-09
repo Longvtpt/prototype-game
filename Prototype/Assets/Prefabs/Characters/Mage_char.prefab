@@ -162,7 +162,9 @@ MonoBehaviour:
   level: 0
   damage: 50
   skillUISprite: {fileID: 21300020, guid: 77790a4a51293b34d99a8171520544c6, type: 3}
+  baseAttackItem: 3
   canAttack: 0
   timeCooldownBase: 1
   state: 0
+  TimeSkill: 0
   weaponPos: {fileID: 1023169654259124316}

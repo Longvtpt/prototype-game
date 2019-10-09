@@ -296,17 +296,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8e8a5056a2f6a45b789bdfac9c07cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameWeapon: 3
   damage: 50
   speed: 1.5
   timeLife: 7.5
+  counterColl: 1
+  WeaponName: 4
   ease_type: 1
-  curve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &7879552142110745755
 GameObject:
   m_ObjectHideFlags: 0

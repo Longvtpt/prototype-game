@@ -10,12 +10,19 @@ public enum PoolName
 
     //Weapon base
     ARROW,
+    FIRE_BASEATTACK,
 
     //Weapon skill
     SPECIAL_ARROW,
 
+    //Items
+    COIN,
+
     //Sound
-    SOUND
+    SOUND,
+
+    //VFX
+    EXPLOSION
 }
 
 public class PoolManager : Singleton<PoolManager>
