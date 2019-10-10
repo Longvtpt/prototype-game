@@ -145,12 +145,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f5cd0d7e4c591409936b02c5f2b9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameHero: Bowman
   level: 0
-  damage: 0
+  hpBase: 75
+  damage: 20
   skillUISprite: {fileID: 21300054, guid: 77790a4a51293b34d99a8171520544c6, type: 3}
+  heroIcon: {fileID: 2800000, guid: 958f9ea60d73b7347882e215f6a5e782, type: 3}
+  baseAttackItem: 2
   canAttack: 0
   timeCooldownBase: 0.75
   state: 0
+  TimeSkill: 0
   weaponPos: {fileID: 7829502964361056077}
 --- !u!114 &7440486069418853351
 MonoBehaviour:

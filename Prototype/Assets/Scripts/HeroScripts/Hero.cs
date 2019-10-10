@@ -15,9 +15,12 @@ public enum HeroState
 public class Hero : MonoBehaviour
 {
     //Temp
+    public string nameHero;
     public int level;
+    public int hpBase;
     public int damage;
     public Sprite skillUISprite;
+    public Texture heroIcon;
     public PoolName baseAttackItem = PoolName.ARROW;
 
     [HideInInspector]

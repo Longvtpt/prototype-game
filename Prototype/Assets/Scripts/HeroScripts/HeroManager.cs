@@ -5,6 +5,7 @@ using UnityEngine;
 public class HeroManager : MonoBehaviour
 {
     public SkillUIManager skillUIManager;
+    public HeroUITabControl heroUITab;
 
     [SerializeField]
     private Transform[] slots;
@@ -38,5 +39,8 @@ public class HeroManager : MonoBehaviour
 
         //Unlock UI skill
         skillUIManager.AddSkill(slotIndex, heroScript.skillUISprite, heroScript);
+
+        //Add to HeroUI Tab
+        heroUITab.AddHero(heroScript);
     }
 }
