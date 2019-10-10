@@ -26,7 +26,6 @@ public class BaseEnemy : MonoBehaviour
     public int floorIndex;
     public float enemySpeed;
     public bool isMove;
-    public AnimationCurve curveMove;
 
     public float timeCooldownAttack = 1f;
     private float timeCooldown;

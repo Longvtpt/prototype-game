@@ -4,23 +4,14 @@ using UnityEngine;
 
 public class FireSkill : ASkill
 {
-    [SerializeField]
-    private GameObject PrefabSkill;
-
     public override void ActiveSkill(Vector2 from, Vector2 to)
     {
-        //Instantiate a fire arrow
-        //LogSystem.LogSuccess("Fire skill actived!");
-
-        var obj = PoolManager.Instance.PopPool(PoolName.SPECIAL_ARROW.ToString(), from) as GameObject;
-        var baseWeapon = obj.GetComponent<BaseWeapon>();
-        var dir = (to - from).normalized;
-        baseWeapon.DirectAttack(dir);
-        baseWeapon.Move(to + dir * 5);
+        LogSystem.LogSuccess("Fire skill active");
     }
 
     public override void CancelSkill()
     {
-        canActive = false;
+        throw new System.NotImplementedException();
     }
+
 }

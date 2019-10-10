@@ -165,9 +165,9 @@ MonoBehaviour:
   damage: 50
   skillUISprite: {fileID: 21300020, guid: 77790a4a51293b34d99a8171520544c6, type: 3}
   heroIcon: {fileID: 2800000, guid: d041ae7092c9a7f4e87376488f41a8c9, type: 3}
-  baseAttackItem: 3
+  baseAttackItem: 4
   canAttack: 0
-  timeCooldownBase: 1
+  timeCooldownBase: 1.75
   state: 0
   TimeSkill: 0
   weaponPos: {fileID: 1023169654259124316}

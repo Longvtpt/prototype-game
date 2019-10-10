@@ -13,11 +13,13 @@ public class SpecialArrow : Arrow
     {
         if (other.gameObject.tag.Equals(TagManager.ENEMY))
         {
+            //Effects
+            PoolManager.Instance.PopPool(PoolName.BLEED.ToString(), other.transform.position, Quaternion.identity);
+
+
             //LogSystem.LogSuccess("Damage skill --- " + damage);
             var enemy = other.gameObject.GetComponent<BaseEnemy>();
             enemy.Damaged(damage);
-
-            //PoolManager.Instance.PushPool(gameObject, PoolName.ARROW.ToString());
         }
     }
 }

@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 7879552142047502753}
   - component: {fileID: 7879552142047502752}
   m_Layer: 0
-  m_Name: ArrowSkill
+  m_Name: BigArrowSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,7 +300,7 @@ MonoBehaviour:
   speed: 1.5
   timeLife: 7.5
   counterColl: 1
-  WeaponName: 4
+  WeaponName: 5
   ease_type: 1
 --- !u!1 &7879552142110745755
 GameObject:

@@ -6,7 +6,7 @@ public class ShockSkill : ASkill
 {
     public override void ActiveSkill(Vector2 from, Vector2 to)
     {
-        throw new System.NotImplementedException();
+        LogSystem.LogSuccess("ShockSkill");
     }
 
     public override void CancelSkill()

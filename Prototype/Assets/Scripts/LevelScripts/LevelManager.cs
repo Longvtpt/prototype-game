@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
+
 public class LevelManager : Singleton<LevelManager>
 {
     public TopUIControl topUI;
@@ -156,4 +160,11 @@ public class Wave
     {
         return counter >= enemyNumber && EnemyManager.Instance.enemies.Count == 0;
     }
+}
+
+[System.Serializable]
+public struct EnemyWave
+{
+    public PoolName enemy;
+    public int ratio;
 }

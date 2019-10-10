@@ -19,12 +19,8 @@ public class HeroManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && slotCount < 5)
         {
-            if(slotCount % 2 == 0)
-                AddHero(slotCount, 0);
-            else
-                AddHero(slotCount, 1);
+            AddHero(slotCount, slotCount);
             slotCount++;
-
         }
     }
 

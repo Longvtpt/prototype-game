@@ -7,6 +7,7 @@ public enum PoolName
     //Enemy type
     BAT_ENEMY,
     DRAGON_ENEMY,
+    GHOST_ENEMY,
 
     //Weapon base
     ARROW,
@@ -22,7 +23,9 @@ public enum PoolName
     SOUND,
 
     //VFX
-    EXPLOSION
+    EXPLOSION,
+    BLEED,
+    HEADLING
 }
 
 public class PoolManager : Singleton<PoolManager>

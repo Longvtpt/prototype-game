@@ -16,7 +16,7 @@ public class Arrow : BaseWeapon
 
     private void Start()
     {
-        nameWeapon = PoolName.ARROW;
+        nameWeapon = WeaponName;
     }
 
     private void Update()

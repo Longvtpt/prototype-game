@@ -34,6 +34,7 @@ public class Hero : MonoBehaviour
     private float timeCooldownAttack;
     private float timeCooldownSkill;
 
+    [HideInInspector]
     public float TimeSkill;
 
     [SerializeField]
