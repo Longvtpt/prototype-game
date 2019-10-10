@@ -17,14 +17,22 @@ public class HeroManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && slotCount < 5)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            AddHero(slotCount, slotCount);
-            slotCount++;
+            AddHeroAction();
         }
     }
 
-    public void AddHero(int slotIndex, int heroIndex)
+    public void AddHeroAction()
+    {
+        if (slotCount >= 5)
+            return;
+
+        AddHero(slotCount, slotCount);
+        slotCount++;
+    }
+
+    private void AddHero(int slotIndex, int heroIndex)
     {
         var hero = Instantiate(heroPrefabs[heroIndex]) as GameObject;
         var heroScript = hero.GetComponent<Hero>();
@@ -37,6 +45,6 @@ public class HeroManager : MonoBehaviour
         skillUIManager.AddSkill(slotIndex, heroScript.skillUISprite, heroScript);
 
         //Add to HeroUI Tab
-        heroUITab.AddHero(heroScript);
+        heroUITab.AddHeroToUI(heroScript);
     }
 }

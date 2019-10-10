@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class HeroInfoElement : MonoBehaviour
 {
+    [HideInInspector]
+    public Hero hero;
+
     [Header("Info")]
     [SerializeField] private RawImage img;
     [SerializeField] private TextMeshProUGUI nameText;
@@ -35,5 +38,13 @@ public class HeroInfoElement : MonoBehaviour
         hpIncreaseText.text = "+" + hp + "Hp";
         damageIncreaseText.text = "+" + damage + "Damage";
         dpsIncreaseText.text = "+" + dps + "Dps";
+    }
+
+    public void UpLevelHero()
+    {
+        hero.UpLevel();
+
+        //Update info
+        SetupInfo(hero.nameHero, hero.level.ToString(), hero.hpBase.ToString(), hero.damage.ToString());
     }
 }

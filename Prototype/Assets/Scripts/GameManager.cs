@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager>
 
     public Camera cam;
 
+    public SkillCamEff skillCamEff;
+
     public void SwitchState(AState _state)
     {
 

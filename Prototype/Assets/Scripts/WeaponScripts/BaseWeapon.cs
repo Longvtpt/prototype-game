@@ -24,10 +24,18 @@ public abstract class BaseWeapon : MonoBehaviour
     private int counterColl = 1;
     protected int counterCollCurrent;
 
+    protected int damageCurrent;
+
     protected virtual void OnEnable()
     {
+        damageCurrent = damage;
         counterCollCurrent = counterColl;
         timeLifeCurrent = timeLife;
+    }
+
+    public void AddDamageFromHero(int damageHero)
+    {
+        damageCurrent += damageHero;
     }
 
     protected virtual void OnDisable()

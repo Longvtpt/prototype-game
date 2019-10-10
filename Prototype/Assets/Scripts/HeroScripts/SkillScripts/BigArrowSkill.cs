@@ -11,6 +11,13 @@ public class BigArrowSkill : ASkill
     {
         //Instantiate a fire arrow
         //LogSystem.LogSuccess("Fire skill actived!");
+        StartCoroutine(Skill(from, to));
+        
+    }
+
+    IEnumerator Skill(Vector2 from, Vector2 to)
+    {
+        yield return new WaitForSeconds(timeActionAnim);
 
         var obj = PoolManager.Instance.PopPool(PoolName.SPECIAL_ARROW.ToString(), from) as GameObject;
         var baseWeapon = obj.GetComponent<BaseWeapon>();
@@ -18,6 +25,7 @@ public class BigArrowSkill : ASkill
         baseWeapon.DirectAttack(dir);
         baseWeapon.Move(to + dir * 5);
     }
+
 
     public override void CancelSkill()
     {

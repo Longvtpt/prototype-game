@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeCooldown: 7.5
-  timeActionAnim: 2.5
+  timeActionAnim: 1.5
   canActive: 1
 --- !u!114 &1023169654843549173
 MonoBehaviour:
@@ -171,3 +171,5 @@ MonoBehaviour:
   state: 0
   TimeSkill: 0
   weaponPos: {fileID: 1023169654259124316}
+  increaseDamage: 20
+  increaseHp: 10

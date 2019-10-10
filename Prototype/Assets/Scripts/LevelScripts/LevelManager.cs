@@ -69,7 +69,6 @@ public class Level
 
     public IEnumerator PlayLevel()
     {
-
         //UI
         LevelManager.Instance.topUI.SetupWaveAndLevel(LevelManager.Instance.levelCurrent, waves.Length);
 

@@ -157,6 +157,8 @@ MonoBehaviour:
   state: 0
   TimeSkill: 0
   weaponPos: {fileID: 7829502964361056077}
+  increaseDamage: 10
+  increaseHp: 20
 --- !u!114 &7440486069418853351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeCooldown: 7.5
-  timeActionAnim: 2.5
+  timeActionAnim: 2
   canActive: 1
   PrefabSkill: {fileID: 7879552142047502755, guid: 2b06736f50d788940aa2446dea146827,
     type: 3}

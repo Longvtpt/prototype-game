@@ -19,7 +19,7 @@ public class SpecialArrow : Arrow
 
             //LogSystem.LogSuccess("Damage skill --- " + damage);
             var enemy = other.gameObject.GetComponent<BaseEnemy>();
-            enemy.Damaged(damage);
+            enemy.Damaged(damageCurrent);
         }
     }
 }

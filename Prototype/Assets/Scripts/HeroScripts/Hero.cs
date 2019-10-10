@@ -31,6 +31,7 @@ public class Hero : MonoBehaviour
 
     private int slotIndex;
     private Animator anim;
+    private SpriteRenderer heroSprite;
     private float timeCooldownAttack;
     private float timeCooldownSkill;
 
@@ -44,9 +45,15 @@ public class Hero : MonoBehaviour
 
     private Transform enemyTarget;
 
+
+    [Header("Update Level Info")]
+    [SerializeField] private int increaseDamage;
+    [SerializeField] private int increaseHp;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
+        heroSprite = GetComponent<SpriteRenderer>();
 
         skills = GetComponents<ASkill>();
 
@@ -101,11 +108,15 @@ public class Hero : MonoBehaviour
         {
             skills[0].ActiveSkill(transform.position, enemyTarget.position);
         }
+
+        //Effect
+        GameManager.Instance.skillCamEff.ActiveSkill(timeCooldownAttack, heroSprite);
     }
 
     private BaseWeapon InstantiateArrow()
     {
         var obj = PoolManager.Instance.PopPool(baseAttackItem.ToString(), weaponPos.position, Quaternion.identity) as GameObject;
+        obj.GetComponent<BaseWeapon>().AddDamageFromHero(damage);
         return obj.GetComponent<BaseWeapon>();
     }
 
@@ -171,5 +182,14 @@ public class Hero : MonoBehaviour
     {
         anim.SetTrigger(animation);
     }
+
+#region Levels
+    public void UpLevel()
+    {
+        level += 1;
+        hpBase += increaseHp;
+        damage += increaseDamage;
+    }
+#endregion
 }
 

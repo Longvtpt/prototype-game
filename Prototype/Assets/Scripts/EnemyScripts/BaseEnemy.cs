@@ -22,6 +22,8 @@ public class BaseEnemy : MonoBehaviour
     private EnemyState state;
 
     public int health;
+    [HideInInspector]
+    public HpMaskControl hpMask;
     public int coinHolding = 1;
     public int floorIndex;
     public float enemySpeed;
@@ -58,6 +60,10 @@ public class BaseEnemy : MonoBehaviour
 
         //UI
         LevelManager.Instance.topUI.AddHealth(health);
+
+        //Reset health bar
+        if (hpMask != null)
+            hpMask.ResetHealthBar();
     }
 
     private void Update()
@@ -169,10 +175,14 @@ public class BaseEnemy : MonoBehaviour
 
     public void Damaged(int damaged)
     {
+        int decrease = healthCurrent > damaged ? damaged : healthCurrent;
         healthCurrent -= damaged;
 
+        //Hp bar
+        //hpMask.SetPositionMask(damaged / (float)health);
+        hpMask.SetRatio(damaged / (float)health);
         //UI
-        LevelManager.Instance.topUI.InteractWithSlider(damaged);
+        LevelManager.Instance.topUI.InteractWithSlider(decrease);
 
         CheckDie();
     }

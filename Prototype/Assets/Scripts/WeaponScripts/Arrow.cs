@@ -69,7 +69,7 @@ public class Arrow : BaseWeapon
         if (counterCollCurrent-- > 0 && other.gameObject.tag.Equals(TagManager.ENEMY))
         {
             var enemy = other.gameObject.GetComponent<BaseEnemy>();
-            enemy.Damaged(damage);
+            enemy.Damaged(damageCurrent);
 
             PoolManager.Instance.PushPool(gameObject, WeaponName.ToString());
         }
