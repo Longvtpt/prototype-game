@@ -34,4 +34,5 @@ public class TagManager
 {
     public const string ENEMY = "Enemy";
     public const string WEAPON = "Weapon";
+    public const string HERO = "Hero";
 }

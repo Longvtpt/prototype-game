@@ -28,6 +28,7 @@ public class BaseEnemy : MonoBehaviour
     public int floorIndex;
     public float enemySpeed;
     public bool isMove;
+    public int damageAttack;
 
     public float timeCooldownAttack = 1f;
     private float timeCooldown;
@@ -116,7 +117,7 @@ public class BaseEnemy : MonoBehaviour
             if (isMove)
             {
                 var timeMove = MOVE_TIMEBASE_TO_HERO * enemySpeed;
-                transform.DOMoveX(EnemyManager.Instance.heroPos[floorIndex].position.x + 1, timeMove, false).SetEase(Ease.Linear);
+                transform.DOMoveX(EnemyManager.Instance.heroPos[floorIndex].position.x + 0.5f, timeMove, false).SetEase(Ease.Linear);
                 yield return new WaitForSeconds(timeMove);
             }
 
@@ -211,7 +212,7 @@ public class BaseEnemy : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.left * attackRange, Color.red, Time.fixedDeltaTime);
     }
 
-    public virtual void Attack()
+    protected virtual void Attack()
     {
         timeCooldown = timeCooldownAttack;
         //attack action

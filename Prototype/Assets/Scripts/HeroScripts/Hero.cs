@@ -62,16 +62,6 @@ public class Hero : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetAnimation(HeroState.AttackBase);
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetAnimation(HeroState.AttackSkill);
-        }
-
         enemyTarget = EnemyManager.Instance.GetEnemyNear(transform);
         //Temp: Set state by enemy
         if (canAttack && timeCooldownAttack <= 0 && enemyTarget != null)
@@ -88,6 +78,11 @@ public class Hero : MonoBehaviour
             weapon.Move(enemyTarget.position);
 
         }
+    }
+
+    private void LateUpdate()
+    {
+        TimeCooldownTick();
     }
 
     public void UsingSkillActive()
@@ -118,11 +113,6 @@ public class Hero : MonoBehaviour
         var obj = PoolManager.Instance.PopPool(baseAttackItem.ToString(), weaponPos.position, Quaternion.identity) as GameObject;
         obj.GetComponent<BaseWeapon>().AddDamageFromHero(damage);
         return obj.GetComponent<BaseWeapon>();
-    }
-
-    private void LateUpdate()
-    {
-        TimeCooldownTick();
     }
 
     private void TimeCooldownTick()
@@ -190,6 +180,22 @@ public class Hero : MonoBehaviour
         hpBase += increaseHp;
         damage += increaseDamage;
     }
+    #endregion
+
+#region Damage
+    public void Damaged(int damage)
+    {
+        hpBase -= damage;
+
+        if (hpBase <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        Debug.Log(nameHero + " died!");
+    }
+
 #endregion
 }
 
