@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7675379623122587149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8996029703031809960}
+  m_Layer: 0
+  m_Name: BulletPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8996029703031809960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675379623122587149}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.362, y: 0.186, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6105378699209849784}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8855566759770678716
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,8 +43,8 @@ GameObject:
   - component: {fileID: 1978347313229104843}
   - component: {fileID: 2836450792238108307}
   - component: {fileID: 1869729979703568553}
-  - component: {fileID: 7922965042965676865}
-  m_Layer: 0
+  - component: {fileID: 8339997062795873948}
+  m_Layer: 11
   m_Name: Ghost_enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -33,6 +63,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 6915658132049928145}
+  - {fileID: 8996029703031809960}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -150,7 +181,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.78, y: 0.82}
   m_EdgeRadius: 0
---- !u!114 &7922965042965676865
+--- !u!114 &8339997062795873948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,17 +190,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8855566759770678716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc260a888540d0a4f852b6c3a770d57f, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c24e54760cd5941bc318cf4258047b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 2
+  healthDefault: 100
   health: 100
+  hpMask: {fileID: 0}
   coinHolding: 7
   floorIndex: 2
   enemySpeed: 1
-  isMove: 1
-  timeCooldownAttack: 3.5
+  isMove: 0
+  damageDefault: 0
+  damageAttack: 25
+  timeCooldownAttack: 3
+  timeAnimationAttack: 0.85
   attackRange: 1
+  bulletName: 11
+  spawnWeaponPos: {fileID: 8996029703031809960}
 --- !u!1001 &4994257583250253114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -177,11 +215,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6105378699209849784}
     m_Modifications:
-    - target: {fileID: 3015523495223890276, guid: bc5f9f19a70959d4fb14c13d49785a95,
-        type: 3}
-      propertyPath: m_Name
-      value: HPMask
-      objectReference: {fileID: 0}
     - target: {fileID: 1924849729729870571, guid: bc5f9f19a70959d4fb14c13d49785a95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -241,6 +274,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3015523495223890276, guid: bc5f9f19a70959d4fb14c13d49785a95,
+        type: 3}
+      propertyPath: m_Name
+      value: HPMask
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc5f9f19a70959d4fb14c13d49785a95, type: 3}

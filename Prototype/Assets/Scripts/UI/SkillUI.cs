@@ -7,6 +7,7 @@ public class SkillUI : MonoBehaviour
     [SerializeField] private GameObject skillUI;
     [SerializeField] private GameObject lockUI;
     [SerializeField] RectTransform cooldownImg;
+    [SerializeField] private GameObject dieUI;
 
     [HideInInspector]
     public Hero heroTarget;
@@ -25,6 +26,10 @@ public class SkillUI : MonoBehaviour
             LockSkill();
         else
             ActiveSkill();
+
+        //EventManager.AddListener(GameEvent.DIE_HERO, WhenHeroDie);
+        EventManagerWithParam<Hero>.AddListener(GameEvent.DIE_HERO, WhenHeroDie);
+        EventManagerWithParam<Hero>.AddListener(GameEvent.REVIVAL_HERO, WhenHeroRevival);
     }
 
     private void Update()
@@ -38,6 +43,7 @@ public class SkillUI : MonoBehaviour
         activedSkill = true;
         skillUI.SetActive(true);
         lockUI.SetActive(false);
+        dieUI.SetActive(false);
     }
 
     public void LockSkill()
@@ -45,6 +51,25 @@ public class SkillUI : MonoBehaviour
         activedSkill = false;
         skillUI.SetActive(false);
         lockUI.SetActive(true);
+    }
+
+    public void WhenHeroRevival(Hero hero)
+    {
+        if (hero == heroTarget)
+        {
+            ActiveSkill();
+        }
+    }
+
+    public void WhenHeroDie(Hero hero)
+    {
+        if(hero == heroTarget)
+        {
+            activedSkill = false;
+            skillUI.SetActive(true);
+            dieUI.SetActive(true);
+            lockUI.SetActive(false);
+        }
     }
 
     public void SetImgSkill(Sprite img)

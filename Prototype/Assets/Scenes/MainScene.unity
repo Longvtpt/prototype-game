@@ -6299,6 +6299,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2075835708788253067, guid: 64555572a4355ca4a9c3681d398abf4f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64555572a4355ca4a9c3681d398abf4f, type: 3}
 --- !u!224 &1574110545 stripped
@@ -6974,6 +6979,10 @@ MonoBehaviour:
   - poolName: 2
     prefab: {fileID: 8855566759770678716, guid: e4bce065647fff847b6333d1a805abc3,
       type: 3}
+  - poolName: 11
+    prefab: {fileID: 761899849059951772, guid: 1f204d285b278134b801f0640e3e90a2, type: 3}
+  - poolName: 12
+    prefab: {fileID: 350510188192206349, guid: 75bdd46d73fc8ba46bc43572e58c578f, type: 3}
 --- !u!4 &1663598810
 Transform:
   m_ObjectHideFlags: 0
@@ -7099,7 +7108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716107823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.03, y: 2.03, z: 0}
+  m_LocalPosition: {x: 2.03, y: 1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1841352021}
@@ -8858,6 +8867,8 @@ MonoBehaviour:
   - {fileID: 8372188223980966925, guid: e335f6e27fe39394da3989d9bd6c3cd2, type: 3}
   - {fileID: 63146868008705537, guid: 77db3f796c8599c4981088e30cd96606, type: 3}
   - {fileID: 7703376604654138903, guid: c69072d430d501f4c80f3b0995b6a33f, type: 3}
+  heroCanAttack: 0
+  heroDieList: []
 --- !u!4 &2072676196
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public enum PoolName
 {
@@ -25,7 +26,13 @@ public enum PoolName
     //VFX
     EXPLOSION,
     BLEED,
-    HEADLING
+    HEADLING,
+
+    //MORE
+    BULLET_ENEMY,
+    FIRE_SKILL_OBJ
+
+   
 }
 
 public class PoolManager : Singleton<PoolManager>
@@ -83,6 +90,7 @@ public class PoolManager : Singleton<PoolManager>
 
         if (obj.activeSelf)
         {
+            obj.transform.DOKill();
             obj.SetActive(false);
         }
 

@@ -12,9 +12,17 @@ public class ADEnemy : BaseEnemy
     {
         base.Attack();
 
+        StartCoroutine(ShowBullet());
+    }
+
+    private IEnumerator ShowBullet()
+    {
+        yield return new WaitForSeconds(timeAnimationAttack);
+
         //Instantiate bullet
         var bulletObj = PoolManager.Instance.PopPool(bulletName.ToString(), spawnWeaponPos.position, Quaternion.identity) as GameObject;
         var bullet = bulletObj.GetComponent<ADEnemyAttack>();
-        bullet.SetupDamage(damageAttack);
+        bullet.Move();
+        bullet.SetupBullet(damageAttack);
     }
 }

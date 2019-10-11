@@ -41,10 +41,11 @@ GameObject:
   - component: {fileID: 8318453380944988234}
   - component: {fileID: 3948564270745555144}
   - component: {fileID: 8942207584009819682}
+  - component: {fileID: 6933140412717806671}
   - component: {fileID: 5852001078659523661}
   - component: {fileID: 1911477580707516804}
   - component: {fileID: 4356311943311512901}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Paladin_char
   m_TagString: Hero
   m_Icon: {fileID: 0}
@@ -140,6 +141,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.12, y: 0.87}
   m_EdgeRadius: 0
+--- !u!50 &6933140412717806671
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7703376604654138903}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!95 &5852001078659523661
 Animator:
   serializedVersion: 3
@@ -188,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameHero: Paladin
   level: 0
-  hpBase: 200
+  hpBase: 300
   damage: 50
   skillUISprite: {fileID: 21300070, guid: 77790a4a51293b34d99a8171520544c6, type: 3}
   heroIcon: {fileID: 2800000, guid: 2854b9f7afe0081459d0960bc04b7bb9, type: 3}
@@ -198,5 +220,9 @@ MonoBehaviour:
   state: 0
   TimeSkill: 0
   weaponPos: {fileID: 7231026312190624404}
+  timeDie: 5
+  isDie: 0
+  ghostPrefab: {fileID: 6495805020603950100, guid: e89a76085b2faba45b54092d1ca5bc45,
+    type: 3}
   increaseDamage: 15
   increaseHp: 20

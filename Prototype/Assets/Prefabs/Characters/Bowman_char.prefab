@@ -41,11 +41,12 @@ GameObject:
   - component: {fileID: 7545974251348901912}
   - component: {fileID: 7545974251348901915}
   - component: {fileID: 7545974251348901914}
+  - component: {fileID: 8524728045280590295}
   - component: {fileID: 1081614586707271385}
   - component: {fileID: 542016033}
   - component: {fileID: 7440486069418853351}
   - component: {fileID: 5733013456010484170}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bowman_char
   m_TagString: Hero
   m_Icon: {fileID: 0}
@@ -134,6 +135,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &8524728045280590295
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545974251348901917}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &1081614586707271385
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -174,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameHero: Bowman
   level: 0
-  hpBase: 75
+  hpBase: 200
   damage: 20
   skillUISprite: {fileID: 21300054, guid: 77790a4a51293b34d99a8171520544c6, type: 3}
   heroIcon: {fileID: 2800000, guid: 958f9ea60d73b7347882e215f6a5e782, type: 3}
@@ -184,6 +206,10 @@ MonoBehaviour:
   state: 0
   TimeSkill: 0
   weaponPos: {fileID: 7829502964361056077}
+  timeDie: 5
+  isDie: 0
+  ghostPrefab: {fileID: 6495805020603950100, guid: e89a76085b2faba45b54092d1ca5bc45,
+    type: 3}
   increaseDamage: 10
   increaseHp: 20
 --- !u!114 &7440486069418853351
@@ -201,8 +227,6 @@ MonoBehaviour:
   timeCooldown: 7.5
   timeActionAnim: 2
   canActive: 1
-  PrefabSkill: {fileID: 7879552142047502755, guid: 2b06736f50d788940aa2446dea146827,
-    type: 3}
 --- !u!114 &5733013456010484170
 MonoBehaviour:
   m_ObjectHideFlags: 0

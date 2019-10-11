@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 7042902654198483269}
   - component: {fileID: 6829888115042583721}
   - component: {fileID: 661723386557029267}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -234,14 +234,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
+  healthDefault: 65
   health: 65
   hpMask: {fileID: 0}
   coinHolding: 1
   floorIndex: 0
   enemySpeed: 2
   isMove: 1
+  damageDefault: 10
   damageAttack: 10
   timeCooldownAttack: 2
+  timeAnimationAttack: 1
   attackRange: 1
   collAttack: {fileID: 5838247502405634329}
 --- !u!1001 &3923849053118581591
@@ -251,11 +254,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6373197674894338607}
     m_Modifications:
-    - target: {fileID: 3015523495223890276, guid: bc5f9f19a70959d4fb14c13d49785a95,
-        type: 3}
-      propertyPath: m_Name
-      value: HPMask
-      objectReference: {fileID: 0}
     - target: {fileID: 1924849729729870571, guid: bc5f9f19a70959d4fb14c13d49785a95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -310,6 +308,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3015523495223890276, guid: bc5f9f19a70959d4fb14c13d49785a95,
+        type: 3}
+      propertyPath: m_Name
+      value: HPMask
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc5f9f19a70959d4fb14c13d49785a95, type: 3}

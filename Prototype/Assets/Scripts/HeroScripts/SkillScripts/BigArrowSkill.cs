@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class BigArrowSkill : ASkill
 {
-    [SerializeField]
-    private GameObject PrefabSkill;
-
     public override void ActiveSkill(Vector2 from, Vector2 to)
     {
         //Instantiate a fire arrow

@@ -20,6 +20,8 @@ public class LevelManager : Singleton<LevelManager>
     public bool isNextLevel;
 
     public int levelCurrent = 0;
+    public int waveCurrent;
+
     private float timeCanNextLevelDefault = 1f;
 
     private void Start()
@@ -58,6 +60,11 @@ public class LevelManager : Singleton<LevelManager>
         if (timeCanNextLevelDefault > 0)
             timeCanNextLevelDefault -= Time.deltaTime;
     }
+
+    public int GetWeightLevel()
+    {
+        return 1 + levelCurrent * 20 + waveCurrent;
+    }
 }
 
 
@@ -77,6 +84,7 @@ public class Level
         //active
         for (int i = 0; i < waves.Length; i++)
         {
+            LevelManager.Instance.waveCurrent = i;
             CoroutineHandler.StartStaticCoroutine(waves[i].SpawnEnemy(i));
 
             //All enemy is died

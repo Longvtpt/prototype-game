@@ -28,10 +28,10 @@ public class Arrow : BaseWeapon
         base.OnEnable();
     }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
+    //protected override void OnDisable()
+    //{
+    //    base.OnDisable();
+    //}
 
 
     public override void ChangeSpecial()
@@ -68,7 +68,7 @@ public class Arrow : BaseWeapon
     {
         if (counterCollCurrent-- > 0 && other.gameObject.tag.Equals(TagManager.ENEMY))
         {
-            var enemy = other.gameObject.GetComponent<BaseEnemy>();
+               var enemy = other.gameObject.GetComponent<BaseEnemy>();
             enemy.Damaged(damageCurrent);
 
             PoolManager.Instance.PushPool(gameObject, WeaponName.ToString());

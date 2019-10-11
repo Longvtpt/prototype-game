@@ -8,7 +8,8 @@ public enum HeroState
     Idle,
     Move,
     AttackBase,
-    AttackSkill
+    AttackSkill,
+    Die
 }
 
 [RequireComponent(typeof(ASkill))]
@@ -29,9 +30,12 @@ public class Hero : MonoBehaviour
 
     public HeroState state;
 
+    private int hpCurrent;
     private int slotIndex;
     private Animator anim;
     private SpriteRenderer heroSprite;
+    private Collider2D coll;
+
     private float timeCooldownAttack;
     private float timeCooldownSkill;
 
@@ -45,6 +49,14 @@ public class Hero : MonoBehaviour
 
     private Transform enemyTarget;
 
+    [SerializeField] private float timeDie;
+    private float timeDieCurrent;
+    public bool isDie;
+    private Color dieColor;
+    private Color aliveColor;
+    [SerializeField] private GameObject ghostPrefab;
+    private Transform ghost;
+
 
     [Header("Update Level Info")]
     [SerializeField] private int increaseDamage;
@@ -52,16 +64,28 @@ public class Hero : MonoBehaviour
 
     private void Start()
     {
+        hpCurrent = hpBase;
         anim = GetComponent<Animator>();
         heroSprite = GetComponent<SpriteRenderer>();
+        coll = GetComponent<Collider2D>();
+        aliveColor = heroSprite.color;
+        dieColor = new Color(heroSprite.color.r, heroSprite.color.g, heroSprite.color.b, 0.3f);
 
         skills = GetComponents<ASkill>();
 
         TimeSkill = skills[0].timeCooldown;
+
+        //Events
+        //EventManager.AddListener(GameEvent.DIE_HERO, Die);
+        EventManagerWithParam<Hero>.AddListener(GameEvent.DIE_HERO, Die);
+        EventManagerWithParam<Hero>.AddListener(GameEvent.REVIVAL_HERO, Revival);
     }
 
     private void Update()
     {
+        if (isDie)
+            return;
+
         enemyTarget = EnemyManager.Instance.GetEnemyNear(transform);
         //Temp: Set state by enemy
         if (canAttack && timeCooldownAttack <= 0 && enemyTarget != null)
@@ -83,6 +107,8 @@ public class Hero : MonoBehaviour
     private void LateUpdate()
     {
         TimeCooldownTick();
+        CheckRevival();
+
     }
 
     public void UsingSkillActive()
@@ -122,6 +148,9 @@ public class Hero : MonoBehaviour
 
         if (timeCooldownSkill > 0)
             timeCooldownSkill -= Time.deltaTime;
+
+        if (timeDieCurrent > 0)
+            timeDieCurrent -= Time.deltaTime;
     }
 
     public void SwitchState(HeroState _state)
@@ -154,6 +183,9 @@ public class Hero : MonoBehaviour
             case HeroState.Idle:
                 SwitchAnimation("_idle");
                 break;
+            case HeroState.Die:
+                SwitchAnimation("_die");
+                break;
             case HeroState.Move:
                 SwitchAnimation("_move");
                 break;
@@ -178,6 +210,7 @@ public class Hero : MonoBehaviour
     {
         level += 1;
         hpBase += increaseHp;
+        hpCurrent += increaseHp;
         damage += increaseDamage;
     }
     #endregion
@@ -185,15 +218,63 @@ public class Hero : MonoBehaviour
 #region Damage
     public void Damaged(int damage)
     {
-        hpBase -= damage;
+        hpCurrent -= damage;
 
-        if (hpBase <= 0)
-            Die();
+        if (hpCurrent <= 0)
+            //EventManager.CallEvent(GameEvent.DIE_HERO);
+            //Die();
+            EventManagerWithParam<Hero>.CallEvent(GameEvent.DIE_HERO, this);
     }
 
-    private void Die()
+    private void Die(Hero hero)
     {
-        Debug.Log(nameHero + " died!");
+        if (this != hero)
+            return;
+
+        timeDieCurrent = timeDie;
+        isDie = true;
+        coll.enabled = false;
+
+        //Change 
+        var color = heroSprite.color;
+        heroSprite.DOColor(dieColor, 1f);
+        HeroManager.Instance.HeroDie(this);
+        SwitchState(HeroState.Die);
+
+        if(ghost == null)
+        {
+            //Show ghost
+            var ghostObj = Instantiate(ghostPrefab, transform) as GameObject;
+            ghostObj.transform.position = transform.position + Vector3.up / 2;
+            ghost = ghostObj.transform;
+        }
+        else
+        {
+            ghost.gameObject.SetActive(true);
+        }
+    }
+
+    private void CheckRevival()
+    {
+        if(isDie == true && timeDieCurrent <= 0)
+        {
+            EventManagerWithParam<Hero>.CallEvent(GameEvent.REVIVAL_HERO, this);
+        }
+    }
+
+    private void Revival(Hero hero)
+    {
+        if (hero != this)
+            return;
+
+        hpCurrent = hpBase;
+        isDie = false;
+        coll.enabled = true;
+        heroSprite.DOColor(aliveColor, 0.5f);
+        HeroManager.Instance.RevivalHero(this);
+        SwitchState(HeroState.Idle);
+
+        ghost.gameObject.SetActive(false);
     }
 
 #endregion

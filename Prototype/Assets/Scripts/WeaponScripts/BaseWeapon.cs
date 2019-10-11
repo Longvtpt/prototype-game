@@ -38,10 +38,10 @@ public abstract class BaseWeapon : MonoBehaviour
         damageCurrent += damageHero;
     }
 
-    protected virtual void OnDisable()
-    {
-        transform.DOKill(true);
-    }
+    //protected virtual void OnDisable()
+    //{
+    //    transform.DOKill(true);
+    //}
 
     protected virtual void LateUpdate()
     {

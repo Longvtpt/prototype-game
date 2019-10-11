@@ -41,10 +41,11 @@ GameObject:
   - component: {fileID: 8372188223980966920}
   - component: {fileID: 8372188223980966921}
   - component: {fileID: 8372188223980966922}
+  - component: {fileID: 6146948401288096616}
   - component: {fileID: 1540501853373594255}
   - component: {fileID: 8372188223980966923}
   - component: {fileID: 8372188223980966924}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wizard_char
   m_TagString: Hero
   m_Icon: {fileID: 0}
@@ -133,6 +134,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &6146948401288096616
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8372188223980966925}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &1540501853373594255
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -172,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeCooldown: 10
-  timeActionAnim: 3
+  timeActionAnim: 1.25
   canActive: 1
 --- !u!114 &8372188223980966924
 MonoBehaviour:
@@ -188,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameHero: Wizard
   level: 0
-  hpBase: 100
+  hpBase: 200
   damage: 40
   skillUISprite: {fileID: 21300032, guid: 77790a4a51293b34d99a8171520544c6, type: 3}
   heroIcon: {fileID: 2800000, guid: bdf919be5c0b47f4cb2b6acebe2bbdd7, type: 3}
@@ -198,5 +220,9 @@ MonoBehaviour:
   state: 0
   TimeSkill: 0
   weaponPos: {fileID: 8372188222907106030}
+  timeDie: 5
+  isDie: 0
+  ghostPrefab: {fileID: 6495805020603950100, guid: e89a76085b2faba45b54092d1ca5bc45,
+    type: 3}
   increaseDamage: 25
   increaseHp: 15

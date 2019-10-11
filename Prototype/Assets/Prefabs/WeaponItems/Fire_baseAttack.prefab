@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4958862533994595987}
   - component: {fileID: 518573016876473911}
   - component: {fileID: 1795542452479408654}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fire_baseAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4661733271494798549}
   - component: {fileID: 6280691989668980618}
   - component: {fileID: 3282939652285865912}
-  - component: {fileID: 5384348775830639173}
-  m_Layer: 0
+  - component: {fileID: 3731040703207057154}
+  m_Layer: 11
   m_Name: Dragon_enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -33,6 +33,7 @@ Transform:
   m_LocalScale: {x: -0.55, y: 0.55, z: 1}
   m_Children:
   - {fileID: 8699940950124063278}
+  - {fileID: 9032872631760601344}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -150,7 +151,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.76, y: 1.45}
   m_EdgeRadius: 0
---- !u!114 &5384348775830639173
+--- !u!114 &3731040703207057154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,18 +160,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 1493029660947523216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc260a888540d0a4f852b6c3a770d57f, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c24e54760cd5941bc318cf4258047b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
+  healthDefault: 200
   health: 200
   hpMask: {fileID: 0}
   coinHolding: 3
   floorIndex: 1
   enemySpeed: 1
   isMove: 0
-  timeCooldownAttack: 2.5
-  attackRange: 4
+  damageDefault: 20
+  damageAttack: 30
+  timeCooldownAttack: 2
+  timeAnimationAttack: 0.7
+  attackRange: 1
+  bulletName: 11
+  spawnWeaponPos: {fileID: 9032872631760601344}
+--- !u!1 &2529066554839582337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9032872631760601344}
+  m_Layer: 0
+  m_Name: BulletPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9032872631760601344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2529066554839582337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.28, y: 0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1317168991019726025}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7064483784649527493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,11 +215,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1317168991019726025}
     m_Modifications:
-    - target: {fileID: 3015523495223890276, guid: bc5f9f19a70959d4fb14c13d49785a95,
-        type: 3}
-      propertyPath: m_Name
-      value: HPMask
-      objectReference: {fileID: 0}
     - target: {fileID: 1924849729729870571, guid: bc5f9f19a70959d4fb14c13d49785a95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -242,6 +274,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3015523495223890276, guid: bc5f9f19a70959d4fb14c13d49785a95,
+        type: 3}
+      propertyPath: m_Name
+      value: HPMask
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc5f9f19a70959d4fb14c13d49785a95, type: 3}

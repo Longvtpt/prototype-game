@@ -21,6 +21,7 @@ public class BaseEnemy : MonoBehaviour
     private Animator anim;
     private EnemyState state;
 
+    [SerializeField] private int healthDefault;
     public int health;
     [HideInInspector]
     public HpMaskControl hpMask;
@@ -28,9 +29,12 @@ public class BaseEnemy : MonoBehaviour
     public int floorIndex;
     public float enemySpeed;
     public bool isMove;
+    public int damageDefault;
+    [HideInInspector]
     public int damageAttack;
 
     public float timeCooldownAttack = 1f;
+    public float timeAnimationAttack = 1f;
     private float timeCooldown;
     private bool canAttack;
 
@@ -53,7 +57,10 @@ public class BaseEnemy : MonoBehaviour
     private void OnEnable()
     {
         timeCooldown = 0;
+        health = healthDefault * LevelManager.Instance.GetWeightLevel();
         healthCurrent = health;
+        damageAttack = damageDefault * LevelManager.Instance.GetWeightLevel();
+
         EnemyManager.Instance.AddEnemy(this);
 
         if(anim != null)
@@ -69,7 +76,7 @@ public class BaseEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (canAttack && timeCooldown <= 0)
+        if (canAttack && timeCooldown <= 0 && HeroManager.Instance.heroCanAttack > 0)
             SwitchState(EnemyState.Attack);
     }
 
@@ -207,14 +214,17 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     public void ShowAttackRange()
     {
         Debug.DrawRay(transform.position, Vector3.left * attackRange, Color.red, Time.fixedDeltaTime);
     }
+#endif
+
 
     protected virtual void Attack()
     {
-        timeCooldown = timeCooldownAttack;
+        timeCooldown = timeCooldownAttack + timeAnimationAttack;
         //attack action
 
     }
